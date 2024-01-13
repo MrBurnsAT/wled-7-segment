@@ -24,14 +24,14 @@ jobs:
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
-        wget https://github.com/Aircoookie/WLED/archive/refs/heads/main.zip -O /tmp/WLEDtemp/mm.zip
+        wget https://github.com/Aircoookie/WLED/archive/refs/heads/0_15.zip -O /tmp/WLEDtemp/mm.zip
         unzip /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
         find /tmp/WLEDtemp -maxdepth 1 -mindepth 1 -name "*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32c3dev' >>platformio.ini
-        echo 'build_flags = ${env:esp32c3dev.build_flags} -D USERMOD_WORDCLOCK -D USERMOD_ANALOG_CLOCK -D USERMOD_SEVEN_SEGMENT -D USERMOD_SSDR' >>platformio.ini
+        echo 'build_flags = ${env:esp32c3dev.build_flags} -D USERMOD_PIRSWITCH -D USERMOD_RTC -D USERMOD_SSDR -D USERMOD_SN_PHOTORESISTOR' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build
     - name: Copy Files
